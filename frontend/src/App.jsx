@@ -9,7 +9,7 @@ function App() {
 
   const GOOGLE_FORM_ID = '1FAIpQLSffr3eaxDH5u0wuzDmQT_2lS7H_r6ctxsY3QKmbDc-mrlrrxw';
   const GOOGLE_FORM_FIELD_ID = '1924648042';
-  const BACKEND_API_URL = 'http://localhost:5000/api/waitlist';
+  const BACKEND_API_URL = '/api/waitlist';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
