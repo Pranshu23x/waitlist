@@ -1,0 +1,70 @@
+import nodemailer from 'nodemailer';
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER || 'test@example.com',
+    pass: process.env.EMAIL_PASS || 'password',
+  },
+});
+
+export default async function handler(req, res) {
+  // Only allow POST
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const { email } = req.body;
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'Invalid email address' });
+  }
+
+  try {
+    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: "You're on the Rewine waitlist 🚀",
+        text: "Thanks for joining our waitlist! We're thrilled to have you on board. We'll be in touch soon with more updates.\n\nBest,\nThe Team",
+        html: `
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #111;">
+            <h1 style="font-family: Georgia, serif; font-style: italic; font-weight: normal; font-size: 28px; margin-bottom: 40px;">
+              Rewine
+            </h1>
+            
+            <p style="font-size: 16px; line-height: 1.6; margin-bottom: 24px;">Hi,</p>
+            
+            <p style="font-size: 16px; line-height: 1.6; margin-bottom: 24px;">
+              Thank you for joining the Rewine waitlist.
+            </p>
+            
+            <p style="font-size: 16px; line-height: 1.6; margin-bottom: 24px;">
+              Once the product is ready, you'll receive free access to Rewine and be invited to participate in beta testing. Excited to help you ace your next interview.
+            </p>
+            
+            <p style="font-size: 16px; line-height: 1.6; margin-bottom: 40px;">
+              Thanks again for joining. If you're interested in collaborating or have any questions, feel free to reply directly to this email.
+            </p>
+            
+            <p style="font-size: 16px; line-height: 1.6; color: #666; margin-bottom: 8px;">
+              Cheers,
+            </p>
+            
+            <p style="font-size: 16px; line-height: 1.6; font-weight: bold; margin-top: 0;">
+              Pranshu
+            </p>
+          </div>
+        `
+      });
+      console.log(`Email sent successfully to ${email}`);
+    } else {
+      console.log(`[Mock] Waitlist signup for ${email}. Email not sent (Missing credentials).`);
+    }
+
+    res.status(200).json({ success: true, message: 'Added to waitlist' });
+  } catch (error) {
+    console.error('Error sending email:', error.message);
+    res.status(200).json({ success: true, message: 'Added to waitlist, but email sending failed' });
+  }
+}

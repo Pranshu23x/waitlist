@@ -1,17 +1,10 @@
 {
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/backend/server.js"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/frontend/dist/$1"
-    },
-    {
-      "source": "/",
-      "destination": "/frontend/dist/index.html"
+      "source": "/api/waitlist",
+      "destination": "/api/waitlist"
     }
-  ],
-  "cleanUrls": true
+  ]
 }
