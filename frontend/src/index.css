@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@100;200;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@100;200;300;400&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -135,6 +135,24 @@ input::placeholder {
   animation: shimmer 2s infinite;
 }
 
+@keyframes marquee-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee {
+  animation: marquee-left 40s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-right 40s linear infinite;
+}
+
 .font-serif-premium {
   font-family: 'Cormorant Garamond', serif;
 }
@@ -148,4 +166,83 @@ input::placeholder {
 /* Optional: Keep specific elements from inverting if they look bad */
 .site-invert .no-invert {
   filter: invert(1) hue-rotate(180deg);
+}
+
+.font-source-serif {
+  font-family: 'Source Serif 4', serif;
+}
+
+.clip-btn {
+  border: none;
+  width: 140px;
+  height: 50px;
+  color: #fff;
+  z-index: 1;
+  display: flex;
+  background: #000;
+  position: relative;
+  cursor: pointer;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.clip-btn p {
+  margin: 0 auto;
+  align-self: center;
+  font-size: 17px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.clip-btn::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  z-index: -1;
+  height: 10%;
+  bottom: 0;
+  left: 0;
+  clip-path: polygon(
+    0% 74%, 4% 75%, 8% 76%, 11% 77%, 15% 78%, 20% 78%, 25% 77%, 32% 77%, 37% 75%, 40% 74%,
+    43% 74%, 46% 73%, 52% 72%, 57% 72%, 65% 74%, 66% 75%, 71% 78%, 75% 82%, 81% 86%, 83% 88%,
+    88% 91%, 90% 94%, 94% 96%, 98% 98%, 100% 100%, 82% 100%, 0 100%
+  );
+  background: #8792eb;
+  transition: 0.2s ease;
+}
+
+.clip-btn::before {
+  position: absolute;
+  content: "";
+  transform: rotate(180deg);
+  width: 100%;
+  height: 10%;
+  transition: 0.2s ease;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  clip-path: polygon(
+    0% 74%, 4% 75%, 8% 76%, 11% 77%, 15% 78%, 20% 78%, 25% 77%, 32% 77%, 37% 75%, 40% 74%,
+    43% 74%, 46% 73%, 52% 72%, 57% 72%, 65% 74%, 66% 75%, 71% 78%, 75% 82%, 81% 86%, 83% 88%,
+    88% 91%, 90% 94%, 94% 96%, 98% 98%, 100% 100%, 82% 100%, 0 100%
+  );
+  background: #8792eb;
+}
+
+.clip-btn:hover::after {
+  clip-path: polygon(
+    0 30%, 9% 34%, 7% 39%, 11% 43%, 13% 33%, 17% 30%, 24% 34%, 25% 35%, 30% 31%, 30% 38%,
+    39% 33%, 35% 43%, 43% 45%, 55% 46%, 65% 74%, 67% 66%, 81% 57%, 75% 82%, 81% 86%, 83% 88%,
+    88% 91%, 90% 94%, 94% 96%, 98% 98%, 100% 100%, 82% 100%, 0 100%
+  );
+  height: 80%;
+}
+
+.clip-btn:hover::before {
+  clip-path: polygon(
+    0 30%, 9% 34%, 7% 39%, 11% 43%, 13% 33%, 17% 30%, 24% 34%, 25% 35%, 30% 31%, 30% 38%,
+    39% 33%, 35% 43%, 43% 45%, 55% 46%, 65% 74%, 67% 66%, 81% 57%, 75% 82%, 81% 86%, 83% 88%,
+    88% 91%, 90% 94%, 94% 96%, 98% 98%, 100% 100%, 82% 100%, 0 100%
+  );
+  height: 80%;
 }
